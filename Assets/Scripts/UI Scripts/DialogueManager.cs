@@ -12,5 +12,6 @@ public class DialogueManager : MonoBehaviour
         [HideInInspector] public bool leftSide;
         [HideInInspector] public GameObject portraitObject;
     }
-
+    public CharacterPortrait[] characterPortraits;
+    public List<CharacterPortrait> charactersInScene;
 }

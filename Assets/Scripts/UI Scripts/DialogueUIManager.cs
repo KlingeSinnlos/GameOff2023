@@ -36,8 +36,8 @@ public class DialogueUIManager : MonoBehaviour
             leftSide = false;
         }
         
-        /*portraitUIComponentsRight.text.transform.rotation = Quaternion.Euler(0, -180, 0);
-        portraitUIComponentsRight.nameTag.transform.rotation = Quaternion.Euler(0, -180, 0);*/
+        portraitUIComponentsRight.text.transform.rotation = Quaternion.Euler(0, -180, 0) * Quaternion.Euler(0, 180, 0);
+        portraitUIComponentsRight.nameTag.transform.rotation = Quaternion.Euler(0, -180, 0) * Quaternion.Euler(0, 180, 0);
     }
 
     public void SetCharacterPortrait(DialogueManager.CharacterPortrait characterPortrait)

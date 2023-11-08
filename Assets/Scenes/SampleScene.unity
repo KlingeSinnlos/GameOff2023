@@ -799,6 +799,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animationSpeed: 1
+  skipSpeed: 6
 --- !u!1 &1255658942
 GameObject:
   m_ObjectHideFlags: 0

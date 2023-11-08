@@ -97,6 +97,7 @@ public class DialogueUIManager : MonoBehaviour
     }
 
     private LTDescr typeWriterAnimation;
+    public bool hasTextRolledOut { get; private set; }
     
     /// <summary>
     /// rolls out the text faster by a factor of skipSpeed
@@ -109,8 +110,9 @@ public class DialogueUIManager : MonoBehaviour
     private void TypewriterAnimation(TMP_Text text)
     {
         text.maxVisibleCharacters = 0;
+        hasTextRolledOut = false;
         typeWriterAnimation = LeanTween.value(0, text.text.Length, text.text.Length * 0.05f / animationSpeed)
-            .setOnUpdate(length => text.maxVisibleCharacters = (int)length);
+            .setOnUpdate(length => text.maxVisibleCharacters = (int)length).setOnComplete(_ => hasTextRolledOut = true);
     }
 
     private DialogueManager.CharacterPortrait GetCharacterPortraitFromIdentifier(char identifier)

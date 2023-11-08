@@ -70,6 +70,10 @@ public class DialogueManager : MonoBehaviour
                 break;
             case 12:
                 dialogueUIManager.SkipTypewriterAnimation();
+                print(dialogueUIManager.hasTextRolledOut);
+                break;
+            case 13:
+                print(dialogueUIManager.hasTextRolledOut);
                 break;
         }
     }

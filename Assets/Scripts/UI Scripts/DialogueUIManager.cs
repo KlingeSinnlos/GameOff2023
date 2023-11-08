@@ -6,8 +6,9 @@ using UnityEngine.UI;
 public class DialogueUIManager : MonoBehaviour
 {
     [SerializeField] private float animationSpeed;
+    [SerializeField] private float skipSpeed;
     
-    private List<DialogueManager.CharacterPortrait> characterPortraits = new();
+    private readonly List<DialogueManager.CharacterPortrait> characterPortraits = new();
 
     private PortraitUIComponents portraitUIComponentsLeft;
     private PortraitUIComponents portraitUIComponentsRight;
@@ -24,8 +25,8 @@ public class DialogueUIManager : MonoBehaviour
         foreach (var portraitObject in portraitObjects)
         {
             var currentPortraitUIComponent = new PortraitUIComponents(
-                portraitObject.transform.Find("Dialogue Display").Find("Text").GetComponent<TextMeshProUGUI>(),
-                portraitObject.transform.Find("Dialogue Display").Find("Name Tag").GetComponent<TextMeshProUGUI>(),
+                portraitObject.transform.Find("Dialogue Display").Find("Text").GetComponent<TMP_Text>(),
+                portraitObject.transform.Find("Dialogue Display").Find("Name Tag").GetComponent<TMP_Text>(),
                 portraitObject.transform.Find("Portrait").GetComponent<Image>(),
                 portraitObject.transform.Find("Dialogue Display").gameObject,
                 portraitObject.transform.Find("Dialogue Display").Find("Text Box").gameObject,
@@ -39,7 +40,11 @@ public class DialogueUIManager : MonoBehaviour
         portraitUIComponentsRight.text.transform.rotation = Quaternion.Euler(0, -180, 0) * Quaternion.Euler(0, 180, 0);
         portraitUIComponentsRight.nameTag.transform.rotation = Quaternion.Euler(0, -180, 0) * Quaternion.Euler(0, 180, 0);
     }
-
+    
+    /// <summary>
+    /// assigns a CharacterPortrait to specific UI Elements for the Dialogue on either the left or right side
+    /// </summary>
+    /// <param name="characterPortrait"></param>
     public void SetCharacterPortrait(DialogueManager.CharacterPortrait characterPortrait)
     {
         var currentPortraitUIComponent = characterPortrait.leftSide ? portraitUIComponentsLeft : portraitUIComponentsRight;
@@ -49,6 +54,11 @@ public class DialogueUIManager : MonoBehaviour
         currentPortraitUIComponent.portraitImage.sprite = characterPortrait.portraitSprites[0];
     }
 
+    /// <summary>
+    /// changes the text of the talking dialogue character and manages animations accordingly
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="identifier"></param>
     public void Speak(string text, char identifier)
     {
         var characterPortrait = GetCharacterPortraitFromIdentifier(identifier);
@@ -57,14 +67,26 @@ public class DialogueUIManager : MonoBehaviour
         (!characterPortrait.leftSide ? portraitUIComponentsLeft : portraitUIComponentsRight).dialogueDisplay.SetActive(false);
         currentPortraitUIComponent.dialogueDisplay.SetActive(true);
         currentPortraitUIComponent.text.text = text;
+        TypewriterAnimation(currentPortraitUIComponent.text);
     }
 
+    /// <summary>
+    /// changes the text and emotion of the talking dialogue character and manages animations accordingly
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="emotion"></param>
+    /// <param name="identifier"></param>
     public void Speak(string text, DialogueManager.Emotion emotion, char identifier)
     {
         Speak(text, identifier);
         SetEmotion(emotion, identifier);
     }
 
+    /// <summary>
+    /// changes the emotion of a specific dialogue character and manages animations accordingly
+    /// </summary>
+    /// <param name="emotion"></param>
+    /// <param name="identifier"></param>
     public void SetEmotion(DialogueManager.Emotion emotion, char identifier)
     {
         var characterPortrait = GetCharacterPortraitFromIdentifier(identifier);
@@ -73,9 +95,22 @@ public class DialogueUIManager : MonoBehaviour
         currentPortraitUIComponent.nameTag.text = characterPortrait.name;
         currentPortraitUIComponent.portraitImage.sprite = characterPortrait.portraitSprites[DialogueManager.GetValueFromEmotion(emotion)];
     }
+
+    private LTDescr typeWriterAnimation;
     
-    public void SkipAnimation()
+    /// <summary>
+    /// rolls out the text faster by a factor of skipSpeed
+    /// </summary>
+    public void SkipTypewriterAnimation()
     {
+        typeWriterAnimation.setTime(typeWriterAnimation.time / skipSpeed);
+    }
+
+    private void TypewriterAnimation(TMP_Text text)
+    {
+        text.maxVisibleCharacters = 0;
+        typeWriterAnimation = LeanTween.value(0, text.text.Length, text.text.Length * 0.05f / animationSpeed)
+            .setOnUpdate(length => text.maxVisibleCharacters = (int)length);
     }
 
     private DialogueManager.CharacterPortrait GetCharacterPortraitFromIdentifier(char identifier)
@@ -85,14 +120,14 @@ public class DialogueUIManager : MonoBehaviour
     
     private class PortraitUIComponents
     {
-        public TextMeshProUGUI text;
-        public TextMeshProUGUI nameTag;
-        public Image portraitImage;
-        public GameObject dialogueDisplay;
-        public GameObject textBox;
-        public GameObject nextArrow;
+        public readonly TMP_Text text;
+        public readonly TMP_Text nameTag;
+        public readonly Image portraitImage;
+        public readonly GameObject dialogueDisplay;
+        public readonly GameObject textBox;
+        public readonly GameObject nextArrow;
 
-        public PortraitUIComponents(TextMeshProUGUI text, TextMeshProUGUI nameTag, Image portraitImage, GameObject dialogueDisplay, GameObject textBox, GameObject nextArrow)
+        public PortraitUIComponents(TMP_Text text, TMP_Text nameTag, Image portraitImage, GameObject dialogueDisplay, GameObject textBox, GameObject nextArrow)
         {
             this.text = text;
             this.nameTag = nameTag;

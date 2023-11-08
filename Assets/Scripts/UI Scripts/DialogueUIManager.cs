@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -5,6 +6,8 @@ using UnityEngine.UI;
 public class DialogueUIManager : MonoBehaviour
 {
     [SerializeField] private float animationSpeed;
+    
+    private List<DialogueManager.CharacterPortrait> characterPortraits = new();
 
     private PortraitUIComponents portraitUIComponentsLeft;
     private PortraitUIComponents portraitUIComponentsRight;
@@ -41,34 +44,44 @@ public class DialogueUIManager : MonoBehaviour
     {
         var currentPortraitUIComponent = characterPortrait.leftSide ? portraitUIComponentsLeft : portraitUIComponentsRight;
         
-        currentPortraitUIComponent.characterPortrait = characterPortrait;
+        characterPortraits.Add(characterPortrait);
         currentPortraitUIComponent.nameTag.text = characterPortrait.name;
         currentPortraitUIComponent.portraitImage.sprite = characterPortrait.portraitSprites[0];
-        
-        print(currentPortraitUIComponent.characterPortrait.name);
     }
 
-    public void Speak(string text, DialogueManager.Emotion emotion, bool leftSide)
+    public void Speak(string text, char identifier)
     {
-        var currentPortraitUIComponent = leftSide ? portraitUIComponentsLeft : portraitUIComponentsRight;
+        var characterPortrait = GetCharacterPortraitFromIdentifier(identifier);
+        var currentPortraitUIComponent = characterPortrait.leftSide ? portraitUIComponentsLeft : portraitUIComponentsRight;
         
-        (!leftSide ? portraitUIComponentsLeft : portraitUIComponentsRight).dialogueDisplay.SetActive(false);
+        (!characterPortrait.leftSide ? portraitUIComponentsLeft : portraitUIComponentsRight).dialogueDisplay.SetActive(false);
         currentPortraitUIComponent.dialogueDisplay.SetActive(true);
         currentPortraitUIComponent.text.text = text;
-        currentPortraitUIComponent.portraitImage.sprite = currentPortraitUIComponent.characterPortrait.portraitSprites[DialogueManager.GetValueFromEmotion(emotion)];
     }
 
-    public void SetEmotion(DialogueManager.Emotion emotion, bool leftSide)
+    public void Speak(string text, DialogueManager.Emotion emotion, char identifier)
     {
-        var currentPortraitUIComponent = leftSide ? portraitUIComponentsLeft : portraitUIComponentsRight;
+        Speak(text, identifier);
+        SetEmotion(emotion, identifier);
+    }
+
+    public void SetEmotion(DialogueManager.Emotion emotion, char identifier)
+    {
+        var characterPortrait = GetCharacterPortraitFromIdentifier(identifier);
+        var currentPortraitUIComponent = characterPortrait.leftSide ? portraitUIComponentsLeft : portraitUIComponentsRight;
         
-        currentPortraitUIComponent.portraitImage.sprite = currentPortraitUIComponent.characterPortrait.portraitSprites[DialogueManager.GetValueFromEmotion(emotion)];
+        currentPortraitUIComponent.portraitImage.sprite = characterPortrait.portraitSprites[DialogueManager.GetValueFromEmotion(emotion)];
     }
     
     public void SkipAnimation()
     {
     }
 
+    private DialogueManager.CharacterPortrait GetCharacterPortraitFromIdentifier(char identifier)
+    {
+        return characterPortraits.Find(characterPortrait => characterPortrait.identifier == identifier);
+    }
+    
     private class PortraitUIComponents
     {
         public TextMeshProUGUI text;
@@ -77,7 +90,6 @@ public class DialogueUIManager : MonoBehaviour
         public GameObject dialogueDisplay;
         public GameObject textBox;
         public GameObject nextArrow;
-        public DialogueManager.CharacterPortrait characterPortrait;
 
         public PortraitUIComponents(TextMeshProUGUI text, TextMeshProUGUI nameTag, Image portraitImage, GameObject dialogueDisplay, GameObject textBox, GameObject nextArrow)
         {

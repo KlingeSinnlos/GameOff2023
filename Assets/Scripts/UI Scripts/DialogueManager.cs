@@ -33,26 +33,26 @@ public class DialogueManager : MonoBehaviour
         switch (i)
         {
             case 1: 
-                dialogueUIManager.SetEmotion(Emotion.Sad, true);
-                dialogueUIManager.SetEmotion(Emotion.Surprised, false);
+                dialogueUIManager.SetEmotion(Emotion.Sad, 'E');
+                dialogueUIManager.SetEmotion(Emotion.Surprised, 'C');
                 break;
             case 2: 
-                dialogueUIManager.Speak("test1", Emotion.Happy, false);
+                dialogueUIManager.Speak("test1", Emotion.Happy, 'C');
                 break;
             case 3: 
-                dialogueUIManager.Speak("test2", Emotion.Angry, true);
+                dialogueUIManager.Speak("test2", Emotion.Angry, 'E');
                 break;
             case 4: 
-                dialogueUIManager.Speak("test3", Emotion.Neutral, true);
+                dialogueUIManager.Speak("test3", Emotion.Neutral, 'E');
                 break;
             case 5: 
-                dialogueUIManager.Speak("test4", Emotion.Neutral, false);
+                dialogueUIManager.Speak("test4", Emotion.Neutral, 'C');
                 break;
             case 6: 
-                dialogueUIManager.Speak("test3", Emotion.Neutral, true);
+                dialogueUIManager.Speak("test3", Emotion.Neutral, 'E');
                 break;
             case 7: 
-                dialogueUIManager.SetEmotion(Emotion.Surprised, false);
+                dialogueUIManager.SetEmotion(Emotion.Surprised, 'C');
                 break;
             default:
                 break;

@@ -633,6 +633,16 @@ MonoBehaviour:
     - {fileID: 1253096355, guid: 1c894b298c56a9f459de20746b1b2810, type: 3}
     - {fileID: 2050219182, guid: 1c894b298c56a9f459de20746b1b2810, type: 3}
     leftSide: 0
+  character3:
+    name: Box Man
+    identifier: 66
+    portraitSprites:
+    - {fileID: -1930542303, guid: fcbfca4cec488ef4c8d22472c8e71281, type: 3}
+    - {fileID: -565206175, guid: fcbfca4cec488ef4c8d22472c8e71281, type: 3}
+    - {fileID: 1787353739, guid: fcbfca4cec488ef4c8d22472c8e71281, type: 3}
+    - {fileID: 1451971853, guid: fcbfca4cec488ef4c8d22472c8e71281, type: 3}
+    - {fileID: 220421177, guid: fcbfca4cec488ef4c8d22472c8e71281, type: 3}
+    leftSide: 0
   characterPortraits: []
   charactersInScene: []
 --- !u!1 &1149235373

@@ -8,6 +8,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private DialogueUIManager dialogueUIManager;
     [SerializeField] private CharacterPortrait character1;
     [SerializeField] private CharacterPortrait character2;
+    [SerializeField] private CharacterPortrait character3;
     
     [Serializable]
     public struct CharacterPortrait { 
@@ -24,6 +25,7 @@ public class DialogueManager : MonoBehaviour
     {
         dialogueUIManager.SetCharacterPortrait(character1);
         dialogueUIManager.SetCharacterPortrait(character2);
+        dialogueUIManager.SetCharacterPortrait(character3);
     }
     private int i;
     private void Update()
@@ -43,7 +45,7 @@ public class DialogueManager : MonoBehaviour
                 dialogueUIManager.Speak("test2", Emotion.Angry, 'E');
                 break;
             case 4: 
-                dialogueUIManager.Speak("test3", Emotion.Neutral, 'E');
+                dialogueUIManager.Speak("test3", Emotion.Neutral, 'B');
                 break;
             case 5: 
                 dialogueUIManager.Speak("test4", Emotion.Neutral, 'C');
@@ -52,6 +54,15 @@ public class DialogueManager : MonoBehaviour
                 dialogueUIManager.Speak("test3", Emotion.Neutral, 'E');
                 break;
             case 7: 
+                dialogueUIManager.SetEmotion(Emotion.Surprised, 'C');
+                break;
+            case 8: 
+                dialogueUIManager.Speak("test4", Emotion.Sad, 'B');
+                break;
+            case 9: 
+                dialogueUIManager.Speak("test5", Emotion.Angry, 'E');
+                break;
+            case 10: 
                 dialogueUIManager.SetEmotion(Emotion.Surprised, 'C');
                 break;
             default:

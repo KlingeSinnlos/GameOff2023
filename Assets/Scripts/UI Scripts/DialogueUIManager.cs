@@ -70,6 +70,7 @@ public class DialogueUIManager : MonoBehaviour
         var characterPortrait = GetCharacterPortraitFromIdentifier(identifier);
         var currentPortraitUIComponent = characterPortrait.leftSide ? portraitUIComponentsLeft : portraitUIComponentsRight;
         
+        currentPortraitUIComponent.nameTag.text = characterPortrait.name;
         currentPortraitUIComponent.portraitImage.sprite = characterPortrait.portraitSprites[DialogueManager.GetValueFromEmotion(emotion)];
     }
     

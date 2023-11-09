@@ -578,6 +578,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1033301025}
   - component: {fileID: 1033301026}
+  - component: {fileID: 1033301027}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -613,8 +614,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueUIManager: {fileID: 1219830127}
-  character1:
-    name: Emi
+  characterPortraits:
+  - name: Emi
     identifier: 69
     portraitSprites:
     - {fileID: 1653852346, guid: a097fd19cc1167546a3186d270507592, type: 3}
@@ -622,29 +623,39 @@ MonoBehaviour:
     - {fileID: -1269261709, guid: a097fd19cc1167546a3186d270507592, type: 3}
     - {fileID: -422951509, guid: a097fd19cc1167546a3186d270507592, type: 3}
     - {fileID: 1171437863, guid: a097fd19cc1167546a3186d270507592, type: 3}
-    leftSide: 1
-  character2:
-    name: Circle Man
-    identifier: 67
-    portraitSprites:
-    - {fileID: -644151210, guid: 1c894b298c56a9f459de20746b1b2810, type: 3}
-    - {fileID: 1738385802, guid: 1c894b298c56a9f459de20746b1b2810, type: 3}
-    - {fileID: -1588096464, guid: 1c894b298c56a9f459de20746b1b2810, type: 3}
-    - {fileID: 1253096355, guid: 1c894b298c56a9f459de20746b1b2810, type: 3}
-    - {fileID: 2050219182, guid: 1c894b298c56a9f459de20746b1b2810, type: 3}
     leftSide: 0
-  character3:
-    name: Box Man
-    identifier: 66
+  - name: Ingrid
+    identifier: 73
     portraitSprites:
-    - {fileID: -1930542303, guid: fcbfca4cec488ef4c8d22472c8e71281, type: 3}
-    - {fileID: -565206175, guid: fcbfca4cec488ef4c8d22472c8e71281, type: 3}
-    - {fileID: 1787353739, guid: fcbfca4cec488ef4c8d22472c8e71281, type: 3}
-    - {fileID: 1451971853, guid: fcbfca4cec488ef4c8d22472c8e71281, type: 3}
-    - {fileID: 220421177, guid: fcbfca4cec488ef4c8d22472c8e71281, type: 3}
+    - {fileID: -217045497, guid: bfca806082558564f94e8fa9fbc1cab9, type: 3}
+    - {fileID: 2135715374, guid: bfca806082558564f94e8fa9fbc1cab9, type: 3}
+    - {fileID: 920318548, guid: bfca806082558564f94e8fa9fbc1cab9, type: 3}
+    - {fileID: 1080874310, guid: bfca806082558564f94e8fa9fbc1cab9, type: 3}
+    - {fileID: -176426813, guid: bfca806082558564f94e8fa9fbc1cab9, type: 3}
     leftSide: 0
-  characterPortraits: []
-  charactersInScene: []
+  - name: Paolo
+    identifier: 80
+    portraitSprites:
+    - {fileID: 1121090074, guid: 200ae73a4cca50545bf5f729a6b395da, type: 3}
+    - {fileID: 1449149716, guid: 200ae73a4cca50545bf5f729a6b395da, type: 3}
+    - {fileID: 388736490, guid: 200ae73a4cca50545bf5f729a6b395da, type: 3}
+    - {fileID: 1271140636, guid: 200ae73a4cca50545bf5f729a6b395da, type: 3}
+    - {fileID: 120967648, guid: 200ae73a4cca50545bf5f729a6b395da, type: 3}
+    leftSide: 0
+  currentDialogueFile: {fileID: 4900000, guid: 519286c3515773849b49de6f1c49722f, type: 3}
+--- !u!114 &1033301027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1033301024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d97113a8c6516147a2b216faea7e6e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flags: []
 --- !u!1 &1149235373
 GameObject:
   m_ObjectHideFlags: 0
@@ -702,7 +713,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1219830123
 MonoBehaviour:
   m_ObjectHideFlags: 0

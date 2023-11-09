@@ -8,7 +8,7 @@ public class DialogueUIManager : MonoBehaviour
     [SerializeField] private float animationSpeed;
     [SerializeField] private float skipSpeed;
     
-    private readonly List<DialogueManager.CharacterPortrait> characterPortraits = new();
+    public readonly List<DialogueManager.CharacterPortrait> characterPortraits = new();
 
     private PortraitUIComponents portraitUIComponentsLeft;
     private PortraitUIComponents portraitUIComponentsRight;
@@ -45,8 +45,10 @@ public class DialogueUIManager : MonoBehaviour
     /// assigns a CharacterPortrait to specific UI Elements for the Dialogue on either the left or right side
     /// </summary>
     /// <param name="characterPortrait"></param>
-    public void SetCharacterPortrait(DialogueManager.CharacterPortrait characterPortrait)
+    public void SetCharacterPortrait(DialogueManager.CharacterPortrait characterPortrait, bool setLeftSide = false)
     {
+        if (setLeftSide)
+            characterPortrait.leftSide = true;
         var currentPortraitUIComponent = characterPortrait.leftSide ? portraitUIComponentsLeft : portraitUIComponentsRight;
         
         characterPortraits.Add(characterPortrait);
@@ -115,7 +117,7 @@ public class DialogueUIManager : MonoBehaviour
             .setOnUpdate(length => text.maxVisibleCharacters = (int)length).setOnComplete(_ => hasTextRolledOut = true);
     }
 
-    private DialogueManager.CharacterPortrait GetCharacterPortraitFromIdentifier(char identifier)
+    public DialogueManager.CharacterPortrait GetCharacterPortraitFromIdentifier(char identifier)
     {
         return characterPortraits.Find(characterPortrait => characterPortrait.identifier == identifier);
     }

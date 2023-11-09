@@ -1,0 +1,6 @@
+EneuR, IangL:"This is a test1"
+Eneu:"This is a test2"
+Ehap, Ihap:"This is a test3": Fset"flag1"
+Epan, Ihap:"This is a test4": Fcheck"flag2", Fset"flag77"
+Ihap, Ehap:"This is a test5": Fcheck"flag1", Fset"flag3", Fset"flag1", Fset"flag2"
+Ineu:"This is a test6": Fcheck"flag3"

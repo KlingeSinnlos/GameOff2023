@@ -1,19 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] float speed = 4f;
+    [SerializeField] private float speed = 4f;
+    
     private Vector2 moveDirection;
     private PlayerAnimation animations;
-    public Rigidbody2D rb;
+    private Rigidbody2D rb;
 
-    void Start() 
+    private void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         animations = GetComponent<PlayerAnimation>();
     }
-    void Update()
+    private void Update()
     {
         moveDirection.x = Input.GetAxisRaw("Horizontal");
         moveDirection.y = Input.GetAxisRaw("Vertical");
@@ -35,7 +35,7 @@ public class PlayerMovement : MonoBehaviour
             animations.ChangeAnimationState(PlayerAnimation.AnimationState.IDLE);
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         print(moveDirection.normalized);
         rb.MovePosition(rb.position + moveDirection.normalized * (speed * Time.fixedDeltaTime));

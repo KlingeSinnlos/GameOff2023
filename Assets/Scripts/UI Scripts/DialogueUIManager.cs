@@ -1,8 +1,10 @@
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+[SuppressMessage("ReSharper", "Unity.PerformanceCriticalCodeInvocation")]
 public class DialogueUIManager : MonoBehaviour
 {
     [SerializeField] private float animationSpeed;
@@ -40,11 +42,12 @@ public class DialogueUIManager : MonoBehaviour
         portraitUIComponentsRight.text.transform.rotation = Quaternion.Euler(0, -180, 0) * Quaternion.Euler(0, 180, 0);
         portraitUIComponentsRight.nameTag.transform.rotation = Quaternion.Euler(0, -180, 0) * Quaternion.Euler(0, 180, 0);
     }
-    
+
     /// <summary>
     /// assigns a CharacterPortrait to specific UI Elements for the Dialogue on either the left or right side
     /// </summary>
     /// <param name="characterPortrait"></param>
+    /// <param name="setLeftSide">declares if the character is portrait on the left or right side, default = false</param>
     public void SetCharacterPortrait(DialogueManager.CharacterPortrait characterPortrait, bool setLeftSide = false)
     {
         if (setLeftSide)

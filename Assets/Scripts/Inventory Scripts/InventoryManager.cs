@@ -5,7 +5,7 @@ public class InventoryManager : MonoBehaviour
 {
     [SerializeField] private float pickUpRange;
     
-    private readonly List<ItemData> inventory = new();
+    public readonly List<ItemData> inventory = new();
 
     private Collider2D itemCollectionTrigger;
     
@@ -48,6 +48,7 @@ public class InventoryManager : MonoBehaviour
             shortestDistance = currentDistance;
             nearestItem = item;
         }
+        
         print(inventory.Count);
         print(nearestItem.GetItemData().name);
         inventory.Add(nearestItem.GetItemData());

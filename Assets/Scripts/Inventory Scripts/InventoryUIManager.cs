@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -13,7 +14,7 @@ public class InventoryUIManager : MonoBehaviour
 
 	private GameObject realUI;
 	
-	private readonly Dictionary<ItemData, Image> itemIconRendererDictionary = new();
+	private readonly Dictionary<Image, ItemData> itemIconRendererDictionary = new();
 	private GameObject scrollerParent;
 	private TMP_Text nameText;
 	private TMP_Text descriptionText;
@@ -57,7 +58,11 @@ public class InventoryUIManager : MonoBehaviour
 		{
 			var currentIcon = Instantiate(itemIcon).GetComponent<Image>();
 			currentIcon.sprite = itemData.icon;
-			itemIconRendererDictionary.Add(itemData, currentIcon);
+			currentIcon.gameObject.GetComponent<Button>().onClick.AddListener(delegate
+			{
+				SelectItem(currentIcon.gameObject, itemData);
+			});
+			itemIconRendererDictionary.Add(currentIcon, itemData);
 		}
 		CreateIconScroller();
 	}
@@ -65,10 +70,11 @@ public class InventoryUIManager : MonoBehaviour
 	private void CreateIconScroller()
 	{
 		var renderedIconCount = 0;
-		foreach (var iconRendererTransform in itemIconRendererDictionary.Select(iconRenderer => iconRenderer.Value.transform))
+		foreach (var iconRendererTransform in itemIconRendererDictionary.Select(iconRenderer => iconRenderer.Key.GetComponent<RectTransform>()))
 		{
 			iconRendererTransform.SetParent(scrollerParent.transform);
 			iconRendererTransform.localPosition = new Vector2(renderedIconCount * 75 - 150, 0);
+			iconRendererTransform.localScale = new Vector3(0.5f, 0.5f, 1);
 			
 			renderedIconCount ++;
 		}
@@ -82,10 +88,16 @@ public class InventoryUIManager : MonoBehaviour
 		itemIconRendererDictionary.Clear();
 	}
 
-	private void SelectItem(ItemData itemData, Transform iconRendererTransform)
+	public void SelectItem(GameObject iconRenderer, ItemData itemData)
 	{
-		scrollerParent.transform.position = -iconRendererTransform.position;
-		iconRendererTransform.GetComponent<RectTransform>().localScale = new Vector3(1.5f, 1.5f);
+		var iconRendererTransform = iconRenderer.GetComponent<RectTransform>();
+		
+		var scrollerParentLocalPosition = scrollerParent.GetComponent<RectTransform>().localPosition;
+		scrollerParentLocalPosition = new Vector3(-iconRendererTransform.localPosition.x,
+			scrollerParentLocalPosition.y, scrollerParentLocalPosition.z);
+		scrollerParent.GetComponent<RectTransform>().localPosition = scrollerParentLocalPosition;
+		
+		iconRendererTransform.localScale = new Vector3(1, 1, 1);
 		nameText.text = itemData.displayName;
 		descriptionText.text = itemData.description;
 		weightText.text = itemData.weight.ToString(CultureInfo.CurrentCulture);

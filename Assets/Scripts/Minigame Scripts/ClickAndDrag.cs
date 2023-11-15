@@ -7,7 +7,7 @@ public class ClickAndDrag : MonoBehaviour
     private Vector3 worldPosition;
     private Collider2D itemCollider;
     private Rigidbody2D rb;
-    private bool itemSelected = false;
+    [HideInInspector]public bool itemSelected = false;
     private void Start()
     {
         itemCollider = GetComponent<Collider2D>();
@@ -22,10 +22,10 @@ public class ClickAndDrag : MonoBehaviour
         RaycastHit2D hitData = Physics2D.Raycast(new Vector2(worldPosition.x, worldPosition.y), Vector2.zero, 0);
         try
         {
-        if (hitData.rigidbody.gameObject == gameObject && Input.GetMouseButtonDown(0))
-            itemSelected = true;
-        if (Input.GetMouseButtonUp(0))
-            itemSelected = false;
+            if (hitData.rigidbody.gameObject == gameObject && Input.GetMouseButtonDown(0))
+                itemSelected = true;
+            if (Input.GetMouseButtonUp(0))
+                itemSelected = false;
         }
         catch
         {
@@ -37,7 +37,8 @@ public class ClickAndDrag : MonoBehaviour
             rb.bodyType = RigidbodyType2D.Static;
             itemCollider.isTrigger = true;
             gameObject.layer = 0;
-        } else
+        }
+        else
         {
             rb.bodyType = RigidbodyType2D.Dynamic;
             itemCollider.isTrigger = false;

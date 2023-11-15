@@ -33,8 +33,29 @@ public class Examination : ScriptableObject
     }
     public List<Round> rounds;
 
-    public void AddBaggage()
+    public void AddBaggage(string name, string text, float weight, Vector2 size, MinigameEvidence.Quality quality, Color color)
     {
+        Baggage newBaggage = new Baggage
+        {
+            name = name,
+            text = text,
+            weight = weight,
+            size = size,
+            quality = quality,
+            color = color
+        };
 
+        // Assuming you want to add baggage to the last round, you can modify this logic accordingly.
+        if (rounds.Count > 0)
+        {
+            Round lastRound = rounds[rounds.Count - 1];
+            if (lastRound.addBaggage)
+            {
+                // Instantiate a GameObject based on the baggage data.
+                GameObject newBaggageObject = new GameObject(newBaggage.name);
+                newBaggageObject.transform.position = new Vector3(Random.Range(-10f, 10f), 0f, Random.Range(-10f, 10f));
+            }
+        }
     }
+
 }

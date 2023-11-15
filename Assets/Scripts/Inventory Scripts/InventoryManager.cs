@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
@@ -18,14 +20,6 @@ public class InventoryManager : MonoBehaviour
     
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            foreach (var item in inventory)
-            {
-                print(item.displayName);
-            }
-        }
-
         if (Input.GetKeyDown(KeyCode.F))
         {
             PickUpItem();
@@ -33,25 +27,29 @@ public class InventoryManager : MonoBehaviour
     }
     
     private bool waitingForInput;
-    private readonly List<ItemInWorld> itemsInRange = new();
-    private ItemInWorld nearestItem;
+    public List<int> itemsInRange = new();
     private void PickUpItem()
     {
+        ItemInWorld nearestItem = null;
         var shortestDistance = pickUpRange;
-        foreach (var item in itemsInRange)
+        var itemsToRemove = new List<int>();
+        foreach (var item in itemsInRange.Select(itemInRange => GameObject.Find(itemInRange.ToString()).GetComponent<ItemInWorld>()))
         {
-            print(item.GetItemData().displayName);
             var currentDistance = ((Vector2) item.transform.position - (Vector2) transform.position).sqrMagnitude;
-            print(currentDistance);
-            if (currentDistance > pickUpRange) itemsInRange.Remove(item);
+
+            if (currentDistance > pickUpRange)
+            {
+                itemsToRemove.Add(item.GetInstanceID());
+            }
             if (!(currentDistance < shortestDistance)) continue;
             shortestDistance = currentDistance;
             nearestItem = item;
         }
+        itemsInRange.RemoveAll(itemID => itemsToRemove.Contains(itemID));
+        if (nearestItem == null) return;
         
-        print(inventory.Count);
-        print(nearestItem.GetItemData().name);
         inventory.Add(nearestItem.GetItemData());
+        itemsInRange.Remove(nearestItem.GetInstanceID());
         Destroy(nearestItem.gameObject);
     }
 
@@ -59,6 +57,8 @@ public class InventoryManager : MonoBehaviour
     {
         var item = other.GetComponent<ItemInWorld>();
         if (!item) return;
-        itemsInRange.Add(item);
+        item.gameObject.name = item.GetInstanceID().ToString();
+        if (!itemsInRange.Contains(item.GetInstanceID()))
+            itemsInRange.Add(item.GetInstanceID());
     }
 }

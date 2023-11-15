@@ -2,15 +2,14 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class InventoryUIManager : MonoBehaviour
 {
 	[SerializeField] private GameObject itemIcon;
 	[SerializeField] private InventoryManager inventoryManager;
+	[SerializeField] private float animationSpeed;
 
 	private GameObject realUI;
 	
@@ -35,13 +34,6 @@ public class InventoryUIManager : MonoBehaviour
 
 	private void Update()
 	{
-		if (Input.GetMouseButtonDown(0))
-		{
-			var currentSelectedObject = EventSystem.current.currentSelectedGameObject;
-			if (currentSelectedObject) return;
-			print(currentSelectedObject);
-		}
-		
 		if (!Input.GetKeyDown(KeyCode.E)) return;
 		if (!isShowingInventory) ShowInventory();
 		else HideInventory();
@@ -53,7 +45,6 @@ public class InventoryUIManager : MonoBehaviour
 		isShowingInventory = true;
 		realUI.SetActive(true);
 		
-		print("opened Inventory");
 		foreach (var itemData in inventoryManager.inventory)
 		{
 			var currentIcon = Instantiate(itemIcon).GetComponent<Image>();
@@ -91,15 +82,27 @@ public class InventoryUIManager : MonoBehaviour
 	public void SelectItem(GameObject iconRenderer, ItemData itemData)
 	{
 		var iconRendererTransform = iconRenderer.GetComponent<RectTransform>();
-		
-		var scrollerParentLocalPosition = scrollerParent.GetComponent<RectTransform>().localPosition;
-		scrollerParentLocalPosition = new Vector3(-iconRendererTransform.localPosition.x,
-			scrollerParentLocalPosition.y, scrollerParentLocalPosition.z);
-		scrollerParent.GetComponent<RectTransform>().localPosition = scrollerParentLocalPosition;
+		var scrollerParentTransform = scrollerParent.GetComponent<RectTransform>();
+
+		var initialPosition = scrollerParentTransform.localPosition;
+		var finalX = -iconRendererTransform.localPosition.x;
+		LeanTween.value(initialPosition.x, finalX, 1 / animationSpeed).setOnUpdate(x =>
+		{
+			scrollerParentTransform.localPosition = new Vector3(x, initialPosition.y, initialPosition.z);
+		}).setOnComplete(() =>
+		{
+			scrollerParentTransform.localPosition = new Vector3(finalX, initialPosition.y, initialPosition.z);
+		}).setEaseInOutSine();
+
+		foreach (var otherIconRendererTransform in itemIconRendererDictionary.Keys.Select(otherIconRenderer =>
+			         otherIconRenderer.GetComponent<RectTransform>()))
+		{
+			otherIconRendererTransform.localScale = new Vector3(0.5f, 0.5f, 1);
+		}
 		
 		iconRendererTransform.localScale = new Vector3(1, 1, 1);
 		nameText.text = itemData.displayName;
 		descriptionText.text = itemData.description;
-		weightText.text = itemData.weight.ToString(CultureInfo.CurrentCulture);
+		weightText.text = itemData.weightUnlocked ? itemData.weight.ToString(CultureInfo.CurrentCulture) : "???";
 	}
 }

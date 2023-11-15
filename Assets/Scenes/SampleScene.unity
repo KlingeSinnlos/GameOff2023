@@ -1362,8 +1362,8 @@ GameObject:
   - component: {fileID: 1033301025}
   - component: {fileID: 1033301026}
   - component: {fileID: 1033301027}
-  - component: {fileID: 1033301028}
   - component: {fileID: 1033301029}
+  - component: {fileID: 1033301028}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged

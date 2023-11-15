@@ -37,7 +37,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        print(moveDirection.normalized);
+        //print(moveDirection.normalized);
         rb.MovePosition(rb.position + moveDirection.normalized * (speed * Time.fixedDeltaTime));
     }
 }

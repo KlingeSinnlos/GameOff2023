@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a077c5c31ddc4814cb773686db949738, type: 3}
+  m_Name: Knife
+  m_EditorClassIdentifier: 
+  id: knife
+  displayName: Knife
+  description: the Knife of the murderer
+  weight: 10
+  weightUnlocked: 1
+  icon: {fileID: 21300000, guid: ea48e70d3e260db4bb63d70ca830dd78, type: 3}
+  prefab: {fileID: 6074729689698799529, guid: 81ef240ee5dc96f4397bc80307d8474f, type: 3}

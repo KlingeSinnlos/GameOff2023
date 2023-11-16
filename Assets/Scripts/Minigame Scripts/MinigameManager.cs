@@ -5,14 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class MinigameManager : MonoBehaviour
 {
-    void Update()
+    private void Update()
     {
          if (Input.GetKeyDown(KeyCode.Z)) {
             StartMinigame();
          }
     }
 
-    void StartMinigame() {
+    private void StartMinigame() {
         SceneManager.LoadScene("DialogueMinigame");
         Debug.Log("Minigame will be summoned (implementation needed)");
     }

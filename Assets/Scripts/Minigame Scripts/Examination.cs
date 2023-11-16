@@ -13,7 +13,7 @@ public class Examination : ScriptableObject
         public string text;
         public float weight;
         public Vector2 size;
-        public MinigameEvidence.Quality quality;
+        public ItemData.Quality quality;
         public Color color;
     }
 
@@ -33,9 +33,9 @@ public class Examination : ScriptableObject
     }
     public List<Round> rounds;
 
-    public void AddBaggage(string name, string text, float weight, Vector2 size, MinigameEvidence.Quality quality, Color color)
+    public void AddBaggage(string name, string text, float weight, Vector2 size, ItemData.Quality quality, Color color)
     {
-        Baggage newBaggage = new Baggage
+        var newBaggage = new Baggage
         {
             name = name,
             text = text,

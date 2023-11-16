@@ -1,21 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MinigameEvidence : MonoBehaviour
 {
-    public enum Quality
-    {
-        Great,
-        Good,
-        Bad
-    }
-    public const float WeightRatio = 100.0f;
+    public const float weightRatio = 10;
 
-    public float weight;
-    public Vector2 size;
-    public Quality quality;
-    public Sprite sprite;
+    public ItemData itemData;
 
     private Rigidbody2D rigidBody;
     private BoxCollider2D objectCollider;
@@ -31,9 +20,9 @@ public class MinigameEvidence : MonoBehaviour
 
     public void LoadEvidence()
     {
-        rigidBody.mass = weight/WeightRatio;
-        gameObject.transform.localScale = new Vector3(size.x, size.y, 1);
-        spriteRenderer.sprite = sprite;
-        objectCollider.size = sprite.bounds.size;
+        rigidBody.mass = itemData.weight / weightRatio;
+        gameObject.transform.localScale = (Vector3) itemData.sizeOnScale + Vector3.forward;
+        spriteRenderer.sprite = itemData.icon;
+        objectCollider.size = itemData.icon.bounds.size;
     }
 }

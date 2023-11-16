@@ -1465,6 +1465,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eea819742b5d05048a4d7dd2de71565a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  roundAmount: 0
+  roundCurrent: 0
+  baggageInScene: []
+  examination: {fileID: 11400000, guid: f4b3923375191274f8dc5ef2cd3711b4, type: 2}
 --- !u!1 &1144326409
 GameObject:
   m_ObjectHideFlags: 3

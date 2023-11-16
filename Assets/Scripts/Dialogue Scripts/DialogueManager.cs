@@ -37,7 +37,6 @@ public class DialogueManager : MonoBehaviour
 	private void Start()
 	{
 		flagManager = GetComponent<FlagManager>();
-		LoadDialogue(currentDialogueFile);
 	}
 
 	public static int GetValueFromEmotion(Emotion emotion)
@@ -52,7 +51,21 @@ public class DialogueManager : MonoBehaviour
 			_ => 0
 		};
 	}
-
+	/// <summary>
+	/// Loads the current text file, formats it, and starts the dialogue. This method without parameters is mainly for debudding 
+	/// </summary>
+	[MyBox.ButtonMethod]
+	public void LoadDialogue()
+	{
+		try
+		{
+			LoadDialogue(currentDialogueFile);
+		}
+		catch
+		{
+			Debug.LogError("Current Dialogue File Not Valid");
+		}
+	}
 	/// <summary>
 	/// Loads the text file, formats it, and starts the dialogue. If using path, start the path at the resources folder with no file extension: "Dialogue/TestDialogue"
 	/// </summary>

@@ -15,7 +15,18 @@ MonoBehaviour:
   rounds:
   - timeLimit: 30
     addBaggage: 1
-    baggageToBeAdded: []
+    baggageToBeAdded:
+    - name: Regret
+      text: Regret
+      weight: 25
+      size: {x: 2, y: 1}
+      quality: 0
+      color: {r: 0.735849, g: 0.32280168, b: 0.67526054, a: 1}
+      gameObject: {fileID: 0}
+      rigidBody: {fileID: 0}
+      collider: {fileID: 0}
+      textObject: {fileID: 0}
+      spriteRenderer: {fileID: 0}
     changeBaggage: 0
     baggageToBeChanged: []
     removeBaggage: 0

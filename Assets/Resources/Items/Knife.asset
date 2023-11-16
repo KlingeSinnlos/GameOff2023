@@ -19,3 +19,5 @@ MonoBehaviour:
   weightUnlocked: 1
   icon: {fileID: 21300000, guid: ea48e70d3e260db4bb63d70ca830dd78, type: 3}
   prefab: {fileID: 6074729689698799529, guid: 81ef240ee5dc96f4397bc80307d8474f, type: 3}
+  sizeOnScale: {x: 0.5, y: 0.5}
+  quality: 0

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MyBox;
+using TMPro;
 
 [CreateAssetMenu(fileName = "Examination", menuName = "ScriptableObjects/Examination", order = 1)]
 public class Examination : ScriptableObject
@@ -15,6 +16,11 @@ public class Examination : ScriptableObject
         public Vector2 size;
         public ItemData.Quality quality;
         public Color color;
+        [HideInInspector] public GameObject gameObject;
+        [HideInInspector] public Rigidbody2D rigidBody;
+        [HideInInspector] public BoxCollider2D collider;
+        [HideInInspector] public TextMeshProUGUI textObject;
+        [HideInInspector] public SpriteRenderer spriteRenderer;
     }
 
     [System.Serializable]
@@ -33,29 +39,22 @@ public class Examination : ScriptableObject
     }
     public List<Round> rounds;
 
-    public void AddBaggage(string name, string text, float weight, Vector2 size, ItemData.Quality quality, Color color)
+    public Baggage AddBaggage(Baggage baggage)
     {
-        var newBaggage = new Baggage
-        {
-            name = name,
-            text = text,
-            weight = weight,
-            size = size,
-            quality = quality,
-            color = color
-        };
-
-        // Assuming you want to add baggage to the last round, you can modify this logic accordingly.
-        if (rounds.Count > 0)
-        {
-            Round lastRound = rounds[rounds.Count - 1];
-            if (lastRound.addBaggage)
-            {
-                // Instantiate a GameObject based on the baggage data.
-                GameObject newBaggageObject = new GameObject(newBaggage.name);
-                newBaggageObject.transform.position = new Vector3(Random.Range(-10f, 10f), 0f, Random.Range(-10f, 10f));
-            }
-        }
+        Baggage newBaggage = baggage;
+        newBaggage.gameObject = Instantiate((GameObject)Resources.Load("Prefabs/Baggage", typeof(GameObject)));
+        newBaggage.gameObject.name = newBaggage.name;
+        newBaggage.rigidBody = newBaggage.gameObject.GetComponent<Rigidbody2D>();
+        newBaggage.collider = newBaggage.gameObject.GetComponent<BoxCollider2D>();
+        newBaggage.spriteRenderer = newBaggage.gameObject.GetComponent<SpriteRenderer>();
+        newBaggage.textObject = newBaggage.gameObject.transform.GetChild(0).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
+        newBaggage.textObject.text = newBaggage.text;
+        newBaggage.textObject.gameObject.transform.localScale = new Vector3(1 / newBaggage.size.x, 1 / newBaggage.size.y, 1);
+        newBaggage.rigidBody.mass = newBaggage.weight / MinigameEvidence.weightRatio;
+        newBaggage.gameObject.transform.localScale = (Vector3)newBaggage.size + Vector3.forward;
+        newBaggage.spriteRenderer.color = newBaggage.color;
+        newBaggage.collider.size = newBaggage.spriteRenderer.bounds.size;
+        return newBaggage;
     }
 
 }

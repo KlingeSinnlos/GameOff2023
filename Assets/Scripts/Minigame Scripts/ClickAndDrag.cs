@@ -12,13 +12,12 @@ public class ClickAndDrag : MonoBehaviour
     {
         itemCollider = GetComponent<Collider2D>();
         rb = GetComponent<Rigidbody2D>();
-        print(gameObject.name);
     }
     void Update()
     {
         Vector3 mousePos = Input.mousePosition;
         mousePos.z = Camera.main.nearClipPlane;
-        worldPosition = Camera.main.ScreenToWorldPoint(mousePos);
+        worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, 1));
         RaycastHit2D hitData = Physics2D.Raycast(new Vector2(worldPosition.x, worldPosition.y), Vector2.zero, 0);
         try
         {

@@ -40,4 +40,35 @@ public class PlayerMovement : MonoBehaviour
         //print(moveDirection.normalized);
         rb.MovePosition(rb.position + moveDirection.normalized * (speed * Time.fixedDeltaTime));
     }
+
+    void OnTriggerEnter2D(Collider2D collider){
+
+        if(collider.gameObject.CompareTag("Item")){
+            Debug.Log("Press E to pick up");
+            Item itemScript = collider.gameObject.GetComponent<Item>();
+            PressButtonText.text = "Press E to pick up item";
+            if(Input.GetKeyDown(KeyCode.E)){
+                CollectedItemsValues.Add(itemScript.getValue());
+                Debug.Log("Item added ");
+            }
+        }
+        else if(collider.gameObject.CompareTag("Scale")){
+            Debug.Log("Press SpaceBar to scale");
+            PressButtonText.text = "Press SpaceBar to scale";
+            if(Input.GetKeyDown(KeyCode.Space)){
+                SceneManager.LoadScene("WeightScaleScene");
+            }
+        }
+        else if(collider.gameObject.CompareTag("Character")){
+            Debug.Log("Press Z to interact");
+            PressButtonText.text = "Press Z to interact";
+            if(Input.GetKeyDown(KeyCode.Z)){
+                GameObject.FindGameObjectWithTag("Dialogue UI").SetActive(true);
+            }
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D collider){
+        PressButtonText.text = "";
+    }
 }
